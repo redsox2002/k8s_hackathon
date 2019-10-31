@@ -1,0 +1,24 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: api-gateway-deployment
+  labels:
+    name: api-gateway
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: api-gateway
+  template:
+    metadata:
+      labels:
+        app: api-gateway
+    spec:
+      containers:
+      - name: api-gateway
+        image: vergeops/k8s-rvstore-api-gateway:1.0
+        envFrom:
+        - configMapRef:
+            name: api-configmap
+        ports:
+        - containerPort: 9000
